@@ -56,3 +56,31 @@ def test_slice_step(s_sequence):
 
 def test_slice_full(s_sequence):
     assert s_sequence[:] == s_sequence
+
+
+def test_count_zero(s_sequence):
+    assert s_sequence.count(10) == 0
+
+
+def test_count_four(s_sequence):
+    assert s_sequence.count(4) == 1
+
+
+def test_index_positive(s_sequence):
+    assert s_sequence.index(4) == 1
+
+
+def test_index_negative(s_sequence):
+    with pytest.raises(ValueError):
+        s_sequence.index(5)
+
+
+def test_reversed(s_sequence):
+    r = reversed(s_sequence)
+    assert next(r) == 15
+    assert next(r) == 13
+    assert next(r) == 9
+    assert next(r) == 4
+    assert next(r) == 1
+    with pytest.raises(StopIteration):
+        next(r)
