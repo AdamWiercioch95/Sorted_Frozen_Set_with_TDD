@@ -10,13 +10,13 @@ def test_positive_equal():
 def test_negative_equal():
     s1 = SortedFrozenSet([4, 5, 6])
     s2 = SortedFrozenSet([7, 4, 5])
-    assert s1 != s2
+    assert not s1 == s2
 
 
 def test_type_mismatch():
     s = SortedFrozenSet([4, 5, 6])
     l = [4, 5, 6]
-    assert s != l
+    assert not s == l
 
 
 def test_identical():
