@@ -3,7 +3,7 @@ from collections.abc import Sequence
 
 class SortedFrozenSet(Sequence):
     def __init__(self, items=None):
-        self._items = sorted(set(items) if items is not None else set())
+        self._items = tuple(sorted(set(items) if items is not None else set()))
 
     def __contains__(self, item):
         return item in self._items
@@ -19,10 +19,13 @@ class SortedFrozenSet(Sequence):
         return SortedFrozenSet(result) if isinstance(index, slice) else result
 
     def __repr__(self):
-        return f'{type(self).__name__}({self._items or ""})'
+        return f'{type(self).__name__}({list(self._items) or ""})'
 
     def __eq__(self, other):
         if not isinstance(other, type(self)):
             return NotImplemented
 
         return self._items == other._items
+
+    def __hash__(self):
+        return hash((type(self), self._items))
