@@ -20,3 +20,9 @@ class SortedFrozenSet(Sequence):
 
     def __repr__(self):
         return f'{type(self).__name__}({self._items or ""})'
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return self._items == other._items
