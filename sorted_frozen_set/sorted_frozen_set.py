@@ -18,9 +18,5 @@ class SortedFrozenSet(Sequence):
         result = self._items[index]
         return SortedFrozenSet(result) if isinstance(index, slice) else result
 
-    def __eq__(self, other):
-        return self._items == other._items
-
-    # def count(self, item):
-        # return 1 if value in self._items else 0
-        # return self._items.count(item)
+    def __repr__(self):
+        return f'{type(self).__name__}({self._items or ""})'
