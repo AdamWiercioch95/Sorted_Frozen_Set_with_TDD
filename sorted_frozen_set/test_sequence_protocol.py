@@ -84,3 +84,64 @@ def test_reversed(s_sequence):
     assert next(r) == 1
     with pytest.raises(StopIteration):
         next(r)
+
+
+def test_add_disjoint():
+    s1 = SortedFrozenSet([1, 2, 3])
+    s2 = SortedFrozenSet([4, 5, 6])
+    assert s1 + s2 == SortedFrozenSet([1, 2, 3, 4, 5, 6])
+
+
+def test_add_equal():
+    s = SortedFrozenSet([1, 2, 3])
+    assert s + s == s
+
+
+def test_add_intersecting():
+    s = SortedFrozenSet([1, 2, 3])
+    t = SortedFrozenSet([4, 5, 6])
+    assert s + t == SortedFrozenSet([1, 2, 3, 4, 5, 6])
+
+
+def test_add_type_error_left():
+    s = SortedFrozenSet([1, 2, 3])
+    t = (4, 5, 6)
+    with pytest.raises(TypeError):
+        _ = s + t
+
+
+def test_add_type_error_right():
+    s = (4, 5, 6)
+    t = SortedFrozenSet([1, 2, 3])
+    with pytest.raises(TypeError):
+        _ = s + t
+
+
+def test_repetition_zero_right():
+    s = SortedFrozenSet([1, 2, 3])
+    assert s * 0 == SortedFrozenSet()
+
+
+def test_repetition_negative_right():
+    s = SortedFrozenSet([1, 2, 3])
+    assert s * -5 == SortedFrozenSet()
+
+
+def test_repetition_nonzero_right():
+    s = SortedFrozenSet([1, 2, 3])
+    assert s * 42 == SortedFrozenSet([1, 2, 3])
+
+
+def test_repetition_zero_left():
+    s = SortedFrozenSet([1, 2, 3])
+    assert 0 * s == SortedFrozenSet()
+
+
+def test_repetition_negative_left():
+    s = SortedFrozenSet([1, 2, 3])
+    assert -5 * s == SortedFrozenSet()
+
+
+def test_repetition_nonzero_left():
+    s = SortedFrozenSet([1, 2, 3])
+    assert 42 * s == SortedFrozenSet([1, 2, 3])

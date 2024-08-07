@@ -29,3 +29,15 @@ class SortedFrozenSet(Sequence):
 
     def __hash__(self):
         return hash((type(self), self._items))
+
+    def __add__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return SortedFrozenSet(self._items + other._items)
+
+    def __mul__(self, other):
+        return self if other > 0 else SortedFrozenSet()
+
+    def __rmul__(self, other):
+        return self * other
