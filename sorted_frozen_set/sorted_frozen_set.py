@@ -1,3 +1,4 @@
+from bisect import bisect_left
 from collections.abc import Sequence
 
 
@@ -6,7 +7,11 @@ class SortedFrozenSet(Sequence):
         self._items = tuple(sorted(set(items) if items is not None else set()))
 
     def __contains__(self, item):
-        return item in self._items
+        try:
+            self.index(item)
+            return True
+        except ValueError:
+            return False
 
     def __len__(self):
         return len(self._items)
@@ -41,3 +46,12 @@ class SortedFrozenSet(Sequence):
 
     def __rmul__(self, other):
         return self * other
+
+    def count(self, item):
+        return int((item in self))
+
+    def index(self, item):
+        index = bisect_left(self._items, item)
+        if (index != len(self._items)) and self._items[index] == item:
+            return index
+        raise ValueError(f'{item!r} not found')
