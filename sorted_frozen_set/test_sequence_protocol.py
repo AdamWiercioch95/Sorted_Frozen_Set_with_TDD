@@ -1,3 +1,5 @@
+from collections.abc import Sequence
+
 import pytest
 
 from sorted_frozen_set.sorted_frozen_set import SortedFrozenSet
@@ -145,3 +147,7 @@ def test_repetition_negative_left():
 def test_repetition_nonzero_left():
     s = SortedFrozenSet([1, 2, 3])
     assert 42 * s == SortedFrozenSet([1, 2, 3])
+
+
+def test_sequence_protocol():
+    assert issubclass(SortedFrozenSet, Sequence)

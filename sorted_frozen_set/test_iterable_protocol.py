@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 import pytest
 
 from sorted_frozen_set.sorted_frozen_set import SortedFrozenSet
@@ -21,3 +23,7 @@ def test_for_loop():
     for item in s:
         assert item == expected[counter]
         counter += 1
+
+
+def test_iterable_protocol():
+    assert issubclass(SortedFrozenSet, Iterable)
