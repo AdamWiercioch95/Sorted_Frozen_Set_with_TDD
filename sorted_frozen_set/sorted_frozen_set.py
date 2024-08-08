@@ -1,5 +1,6 @@
 from bisect import bisect_left
-from collections.abc import Sequence
+from collections.abc import Sequence, Set
+from itertools import chain
 
 
 class SortedFrozenSet(Sequence):
@@ -55,3 +56,58 @@ class SortedFrozenSet(Sequence):
         if (index != len(self._items)) and self._items[index] == item:
             return index
         raise ValueError(f'{item!r} not found')
+
+    def isdisjoint(self, iterable):
+        return not len(self & SortedFrozenSet(iterable))
+
+    def issubset(self, iterable):
+        return self <= SortedFrozenSet(iterable)
+
+    def issuperset(self, iterable):
+        return self >= SortedFrozenSet(iterable)
+
+    def intersection(self, iterable):
+        return self & SortedFrozenSet(iterable)
+
+    def union(self, iterable):
+        return self | SortedFrozenSet(iterable)
+
+    def symmetric_difference(self, iterable):
+        return self ^ SortedFrozenSet(iterable)
+
+    def difference(self, iterable):
+        return self - SortedFrozenSet(iterable)
+
+    def __lt__(self, iterable):
+        return self <= iterable and len(self) < len(iterable)
+
+    def __le__(self, iterable):
+        for item in self._items:
+            if item not in iterable:
+                return False
+
+        return True
+
+    def __and__(self, iterable):
+        temp = set()
+
+        for item in self._items:
+            if item in iterable:
+                temp.add(item)
+
+        return SortedFrozenSet(temp)
+
+    def __or__(self, iterable):
+        return SortedFrozenSet(chain(self, iterable))
+
+    def __xor__(self, iterable):
+        return (self | iterable) - (self & iterable)
+
+    def __sub__(self, iterable):
+        temp = set()
+
+        for item in self._items:
+            if item not in iterable:
+                temp.add(item)
+
+        return SortedFrozenSet(temp)
