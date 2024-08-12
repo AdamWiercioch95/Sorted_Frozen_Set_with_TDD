@@ -106,7 +106,7 @@ class SortedFrozenSet(Sequence):
     def __sub__(self, iterable):
         temp = set()
 
-        for item in self._items:
+        for item in self:
             if item not in iterable:
                 temp.add(item)
 
