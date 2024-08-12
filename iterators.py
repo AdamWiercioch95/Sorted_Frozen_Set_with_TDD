@@ -122,3 +122,28 @@ class SkipMissingIterator:
             item = next(self._iterator)
             if item is not missing:
                 return item
+
+
+typesetting_table = {
+    "-": "\u2212",  # Minus sign
+    "*": "\u00D7",  # Multiplication sign
+    "/": "\u00F7",  # Division sign
+}
+
+
+class TranslationIterator:
+    def __init__(self, iterable, table):
+        self._iterator = iter(iterable)
+        self._table = table
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        item = next(self._iterator)
+        return self._table.get(item, item)
+
+
+tree = ['-', '*', '/', 'p', 'q', 'r', '+', missing, missing, missing, missing, missing, missing, 's', 't']
+iterator = TranslationIterator(SkipMissingIterator(InorderIterator(tree)), typesetting_table)
+print(' '.join(iterator))
