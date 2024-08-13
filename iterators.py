@@ -144,6 +144,16 @@ class TranslationIterator:
         return self._table.get(item, item)
 
 
-tree = ['-', '*', '/', 'p', 'q', 'r', '+', missing, missing, missing, missing, missing, missing, 's', 't']
-iterator = TranslationIterator(SkipMissingIterator(InorderIterator(tree)), typesetting_table)
-print(' '.join(iterator))
+# tree = ['-', '*', '/', 'p', 'q', 'r', '+', missing, missing, missing, missing, missing, missing, 's', 't']
+# iterator = TranslationIterator(SkipMissingIterator(InorderIterator(tree)), typesetting_table)
+# print(' '.join(iterator))
+
+
+class AugmentIterator:
+    def __init__(self, data):
+        self._data = data
+
+
+
+
+a = AugmentIterator([1, 2, 3])  # [1, 2, 2, 3, 3, 3]

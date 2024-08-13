@@ -95,5 +95,37 @@ class ContinentsIterator:
 # print(next(country2))
 
 
+class Cycle:
+    def __init__(self, data, id_=0):
+        self._data = data
+        self._id = id_
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        result = self._data[self._id % len(self._data)]
+        self._id += 1
+
+        return result
 
 
+def cycle_next(data, id_=0):
+    while True:
+        yield data[id_ % len(data)]
+        id_ += 1
+
+
+def cycle_prev(data, id_=0):
+    while True:
+        yield data[id_ % len(data)]
+        id_ -= 1
+
+
+# cycle1 = Cycle([1, 2, 3])
+# print(next(cycle1))  # id = 0 -> 1
+# print(next(cycle1))  # id = 1 -> 2
+# print(next(cycle1))  # id = 2 -> 3
+# print(next(cycle1))  # id = 0 -> 1, bo reszta z dzielenia 3 / 3 to 0
+# print(next(cycle1))  # id = 1 -> 2, bo reszta z dzielenia 4 / 3 to 1
+# print(next(cycle1))  # id = 2 -> 3, bo reszta z dzielenia 5 / 3 to 2
