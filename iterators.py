@@ -152,8 +152,26 @@ class TranslationIterator:
 class AugmentIterator:
     def __init__(self, data):
         self._data = data
+        self._id = 0
+        self._counter = 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._id >= len(self._data):
+            raise StopIteration
+
+        result = self._data[self._id]
+        self._counter -= 1
+
+        if self._counter == 0:
+            self._id += 1
+            self._counter = self._id + 1
+
+        return result
 
 
-
-
-a = AugmentIterator([1, 2, 3])  # [1, 2, 2, 3, 3, 3]
+# a = AugmentIterator([1, 'x', 3])  # [1, 2, 2, 3, 3, 3]
+# for item in a:
+#     print(item)
