@@ -1,6 +1,4 @@
-# SortedFrozenSet
-
-
+# Sorted Frozen Set
 
 `SortedFrozenSet` is a custom immutable data structure that combines the characteristics of a `set` and a `list`, ensuring that elements are unique and sorted. This implementation was created as a learning exercise to explore how to develop custom data structures in Python. The project was built using the principles of Test-Driven Development (TDD) to ensure correctness and reliability.
 
